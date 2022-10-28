@@ -1,26 +1,28 @@
 let modInfo = {
-	name: "The ??? Tree",
-	id: "mymod",
-	author: "nobody",
+	name: "The Yes Tree",
+	id: "FortniteBattlePass",
+	author: "Me",
 	pointsName: "points",
 	modFiles: ["layers.js", "tree.js"],
 
 	discordName: "",
 	discordLink: "",
 	initialStartPoints: new Decimal (10), // Used for hard resets and new players
-	offlineLimit: 1,  // In hours
+	offlineLimit: 6,  // In hours
 }
 
 // Set your version in num and name
 let VERSION = {
-	num: "0.0",
-	name: "Literally nothing",
+	num: "1.2",
+	name: "AR Update!!!",
 }
 
 let changelog = `<h1>Changelog:</h1><br>
-	<h3>v0.0</h3><br>
-		- Added things.<br>
-		- Added stuff.`
+	<h3>v1.2</h3><br>
+		- Added Sussy Mogus.<br>
+		- Yes.
+		- (Leave this in always) To win get e280B points!`
+
 
 let winText = `Congratulations! You have reached the end and beaten this game, but for now...`
 
@@ -41,8 +43,35 @@ function canGenPoints(){
 function getPointGen() {
 	if(!canGenPoints())
 		return new Decimal(0)
-
 	let gain = new Decimal(1)
+	if (hasUpgrade('p', 11)) gain = gain.times(2)
+	if (hasUpgrade('p', 12)) gain = gain.times(upgradeEffect('p', 12))
+	if (hasUpgrade('p', 13)) gain = gain.times(upgradeEffect('p', 13))
+	if (hasUpgrade('p', 14)) gain = gain.times(4)
+	if (hasUpgrade('p', 15)) gain = gain.times(100)
+	if (hasUpgrade('r', 11)) gain = gain.times(10)
+	if (hasUpgrade('r', 12)) gain = gain.times(1e6)
+	if (hasUpgrade('r', 13)) gain = gain.times(1e50)
+	if (hasUpgrade('sp', 11)) gain = gain.times(upgradeEffect('sp', 11))
+	if (hasUpgrade('sr', 11)) gain = gain.times(10)
+	if (hasUpgrade('b', 11)) gain = gain.times(5e69)
+	if (hasUpgrade('ar', 11)) gain = gain.times(upgradeEffect('ar', 11))
+	if (hasUpgrade('ar', 11)) gain = gain.times(1e6)
+	if (hasUpgrade('ar', 13)) {
+		if (hasUpgrade('ar', 14)) {
+			console.log('***getting ANTI FARD')
+			gain = gain.times(upgradeEffect('ar', 14))
+		} else {
+			gain = gain.times("e69")
+			console.log('***getting FARD')
+		}
+	}
+	if (hasUpgrade('ar', 15)) gain = gain.times(1e6)
+	if (hasUpgrade('ar', 16)) gain = gain.times(1e9)
+	if (hasUpgrade('y', 11)) gain = gain.times(1e20)
+	if (hasUpgrade('y', 14)) gain = gain.times("e100")
+	if (hasUpgrade('y', 16)) gain = gain.times("e100")
+	if (hasUpgrade('c', 11)) gain = gain.times("e5000")
 	return gain
 }
 
@@ -56,7 +85,7 @@ var displayThings = [
 
 // Determines when the game "ends"
 function isEndgame() {
-	return player.points.gte(new Decimal("e280000000"))
+	return player.points.gte(new Decimal("e280000000000")) //e280B lol
 }
 
 
