@@ -28,7 +28,18 @@ let winText = `Congratulations! You have reached the end and beaten this game, b
 
 // If you add new functions anywhere inside of a layer, and those functions have an effect when called, add them here.
 // (The ones here are examples, all official functions are already taken care of)
-var doNotCallTheseFunctionsEveryTick = ["blowUpEverything"]
+var doNotCallTheseFunctionsEveryTick = ["toggleAuto"]
+
+function toggleAuto() {
+	console.log("Kathulu is " + player.cb.auto);
+	if (player.cb.auto) {
+		player.cb.auto = false;
+		console.log("1 Kathulu is now " + player.cb.auto);
+	} else {
+		player.cb.auto = true;
+		console.log("2 Kathulu is now " + player.cb.auto);
+	}
+}
 
 function getStartPoints(){
     return new Decimal(modInfo.initialStartPoints)
@@ -44,7 +55,7 @@ function getPointGen() {
 	if(!canGenPoints())
 		return new Decimal(0)
 	let gain = new Decimal(1)
-	if (hasUpgrade('p', 11)) gain = gain.times(2)
+	if (hasUpgrade('p', 11)) gain = gain.times("2")
 	if (hasUpgrade('p', 12)) gain = gain.times(upgradeEffect('p', 12))
 	if (hasUpgrade('p', 13)) gain = gain.times(upgradeEffect('p', 13))
 	if (hasUpgrade('p', 14)) gain = gain.times(4)
@@ -72,6 +83,7 @@ function getPointGen() {
 	if (hasUpgrade('y', 14)) gain = gain.times("e100")
 	if (hasUpgrade('y', 16)) gain = gain.times("e100")
 	if (hasUpgrade('c', 11)) gain = gain.times("e5000")
+	if (hasUpgrade('cc', 13)) gain = gain.times("e25000")
 	return gain
 }
 
