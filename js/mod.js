@@ -5,22 +5,22 @@ let modInfo = {
 	pointsName: "points",
 	modFiles: ["layers.js", "tree.js"],
 
-	discordName: "",
-	discordLink: "",
+	discordName: "I don't have one... (Don't clcik it wil open up a useless tab.)",
+	discordLink: "None",
 	initialStartPoints: new Decimal (10), // Used for hard resets and new players
 	offlineLimit: 6,  // In hours
 }
 
 // Set your version in num and name
 let VERSION = {
-	num: "1.2",
-	name: "AR Update!!!",
+	num: "1.6",
+	name: "ME USING SCRATCH FOR IDEAS Update!!!",
 }
 
 let changelog = `<h1>Changelog:</h1><br>
-	<h3>v1.2</h3><br>
-		- Added Sussy Mogus.<br>
-		- Yes.
+	<h3>v1.6</h3><br>
+		- Added QU.<br>
+		- Most importantly... CREATIVITY!
 		- (Leave this in always) To win get e280B points!`
 
 
@@ -84,6 +84,9 @@ function getPointGen() {
 	if (hasUpgrade('y', 16)) gain = gain.times("e100")
 	if (hasUpgrade('c', 11)) gain = gain.times("e5000")
 	if (hasUpgrade('cc', 13)) gain = gain.times("e25000")
+	if (hasUpgrade('c2', 11)) gain = gain.times("e50000")
+	if (hasUpgrade('v', 11)) gain = gain.times("1e150000")
+	if (hasUpgrade('k', 11)) gain = gain.times(upgradeEffect('k', 11))
 	return gain
 }
 

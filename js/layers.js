@@ -250,6 +250,7 @@ addLayer("b", {
     gainMult() { // Calculate the multiplier for main currency from bonuses
         mult = new Decimal(1)
         if (hasUpgrade('b', 12)) mult = mult.times(upgradeEffect('b', 12))
+        if (hasUpgrade('l', 11)) mult = mult.times("1e5000")
         return mult
     },
     gainExp() { // Calculate the exponent on main currency from bonuses
@@ -287,6 +288,7 @@ addLayer("ar", {
 		points: new Decimal(0),
     }},
     color: "Red",
+    branches: ["sb"],
     requires: new Decimal("e70"), // Can be a function that takes requirement increases into account
     resource: "Amogus Rebirth Points", // Name of prestige currency
     baseResource: "points", // Name of resource prestige is based on
@@ -496,9 +498,7 @@ addLayer("c", {
             tooltip:"More PP yesssssssss",
             done() { return player.c.points.gte(50) }
         }
-    },
-
-    
+    },    
 })
 addLayer("cb", {
     name: "CheetoBags", // This is optional, only used in a few places, If absent it just uses the layer id.
@@ -688,7 +688,7 @@ addLayer("a", {
 		points: new Decimal(0),
     }},
     color: "White",
-    branches: ["E"],
+    branches: ["E", "l"],
     requires: new Decimal("5e150000"), // Can be a function that takes requirement increases into account
     resource: "Ascensions", // Name of prestige currency
     baseResource: "Bruhs", // Name of resource prestige is based on
@@ -725,7 +725,13 @@ addLayer("a", {
             title: "Ascend More",
             description: "x1e6 Ascensions",
             cost: new Decimal("e100"),
-    },  
+        },
+        
+        13: {
+            title: "More Ideas",
+            description: "x100 Ideas (Trust me ideas are like important)",
+            cost: new Decimal("e100"),
+        },  
     }
 })
 addLayer("cp", {
@@ -784,7 +790,8 @@ addLayer("E", {
 		points: new Decimal(0),
     }},
     color: "White",
-    branches: ["None"],
+    branches: ["c2"],
+    canBuyMax:"true",
     requires: new Decimal("1e1500"), // Can be a function that takes requirement increases into account
     resource: "Enlightened Energy", // Name of prestige currency
     baseResource: "Ascensions", // Name of resource prestige is based on
@@ -793,6 +800,7 @@ addLayer("E", {
     exponent: 0.5, // Prestige currency exponent
     gainMult() { // Calculate the multiplier for main currency from bonuses
         mult = new Decimal(1)
+        if (hasUpgrade('qu', 12)) mult = mult.times("1e6")
         return mult
     },
     gainExp() { // Calculate the exponent on main currency from bonuses
@@ -813,45 +821,10 @@ addLayer("E", {
             description: "You are now enlightened. x1e24 Ascensions.",
             cost: new Decimal("1"),
         },
-    }
-})
-addLayer("E", {
-    name: "Enlightenment", // This is optional, only used in a few places, If absent it just uses the layer id.
-    symbol: "E", // This appears on the layer's node. Default is the id with the first letter capitalized
-    position: 0, // Horizontal position within a row. By default it uses the layer id and sorts in alphabetical order
-    startData() { return {
-        unlocked: true,
-		points: new Decimal(0),
-    }},
-    color: "White",
-    branches: ["None"],
-    requires: new Decimal("1e1500"), // Can be a function that takes requirement increases into account
-    resource: "Enlightened Energy", // Name of prestige currency
-    baseResource: "Ascensions", // Name of resource prestige is based on
-    baseAmount() {return player.a.points}, // Get the current amount of baseResource
-    type: "static", // normal: cost to gain currency depends on amount gained. static: cost depends on how much you already have
-    exponent: 0.5, // Prestige currency exponent
-    gainMult() { // Calculate the multiplier for main currency from bonuses
-        mult = new Decimal(1)
-        return mult
-    },
-    gainExp() { // Calculate the exponent on main currency from bonuses
-        return new Decimal(1)
-    },
-    row: 7, // Row the layer is in on the tree (0 is the first row)
-    hotkeys: [
-        {key: "e", description: "E: Reset for Enlightenment!", onPress(){
-            if (canReset(this.layer)) {
-                doReset(this.layer)
-            }
-        }},
-    ],
-    layerShown(){return true},
-    upgrades: {
-        11: {
-            title: "Enlightenment",
-            description: "You are now enlightened. x1e24 Ascensions. Also x1e500 PP.",
-            cost: new Decimal("1"),
+        12: {
+            title: "Creativity",
+            description: "Get the ability to unlock the creativity stat without it giving 0.",
+            cost: new Decimal("3"),
         },
     },
     achievements: {
@@ -863,4 +836,552 @@ addLayer("E", {
             done() { return player.E.points.gte(1) }
         },
     }
+})
+addLayer("l", {
+    name: "Light", // This is optional, only used in a few places, If absent it just uses the layer id.
+    symbol: "L", // This appears on the layer's node. Default is the id with the first letter capitalized
+    position: 0, // Horizontal position within a row. By default it uses the layer id and sorts in alphabetical order
+    startData() { return {
+        unlocked: true,
+		points: new Decimal(0),
+    }},
+    color: "White",
+    branches: ["None"],
+    requires: new Decimal("1e1500"), // Can be a function that takes requirement increases into account
+    resource: "Light", // Name of prestige currency
+    baseResource: "Ascensions", // Name of resource prestige is based on
+    baseAmount() {return player.a.points}, // Get the current amount of baseResource
+    type: "static", // normal: cost to gain currency depends on amount gained. static: cost depends on how much you already have
+    exponent: 0.5, // Prestige currency exponent
+    gainMult() { // Calculate the multiplier for main currency from bonuses
+        mult = new Decimal(1)
+        if (hasUpgrade('l', 12)) mult = mult.times("500")
+        return mult
+    },
+    gainExp() { // Calculate the exponent on main currency from bonuses
+        return new Decimal(1)
+    },
+    row: 7, // Row the layer is in on the tree (0 is the first row)
+    hotkeys: [
+        {key: "l", description: "L: Reset for light!", onPress(){
+            if (canReset(this.layer)) {
+                doReset(this.layer)
+            }
+        }},
+    ],
+    layerShown(){return true},
+    upgrades: {
+        11: {
+            title: "Glowy Orb",
+            description: "The first light to exist. x1e5000 Bruhs.",
+            cost: new Decimal("1"),
+        },
+
+        12: {
+            title: "A Lamp",
+            description: "L A M P (x500 Light)",
+            cost: new Decimal("1"),
+        },
+    },
+})
+addLayer("c2", {
+    name: "Creativity", // This is optional, only used in a few places, If absent it just uses the layer id.
+    symbol: "C", // This appears on the layer's node. Default is the id with the first letter capitalized
+    position: 3, // Horizontal position within a row. By default it uses the layer id and sorts in alphabetical order
+    startData() { return {
+        unlocked: true,
+		points: new Decimal(0),
+    }},
+    color: "Brown",
+    resetsNothing:"true",
+    branches: ["qu", "v", "k"],
+    requires: new Decimal("10"), // Can be a function that takes requirement increases into account
+    resource: "Ideas", // Name of prestige currency
+    baseResource: "Enlightened Energy", // Name of resource prestige is based on
+    baseAmount() {return player.E.points}, // Get the current amount of baseResource
+    type: "normal", // normal: cost to gain currency depends on amount gained. static: cost depends on how much you already have
+    exponent: 0.5, // Prestige currency exponent
+    gainMult() { // Calculate the multiplier for main currency from bonuses
+        mult = new Decimal(0)
+        if (hasUpgrade('E', 12)) mult = mult.add("1")
+        if (hasUpgrade('a', 13)) mult = mult.times("100")
+        if (hasUpgrade('qu', 12)) mult = mult.times("50")
+        if (hasUpgrade('v', 12)) mult = mult.times("1e6")
+        if (hasUpgrade('qu', 14)) mult = mult.times("5000")
+        return mult
+    },
+    gainExp() { // Calculate the exponent on main currency from bonuses
+        return new Decimal(1)
+    },
+    row: 7, // Row the layer is in on the tree (0 is the first row)
+    hotkeys: [
+        {key: "none6", description: "None: Reset for creativity!", onPress(){
+            if (canReset(this.layer)) {
+                doReset(this.layer)
+            }
+        }},
+    ],
+    layerShown(){return true},
+    upgrades: {
+        11: {
+            title: "The invention of x1e50000 Points. (Note: Creativity is basically a hub for many trees to start. So it is recommended you have a lot of it.)",
+            description: "Read the title",
+            cost: new Decimal("1"),
+        },
+    },
+})
+addLayer("qu", {
+    name: "QuantumFluctuations", // This is optional, only used in a few places, If absent it just uses the layer id.
+    symbol: "QU", // This appears on the layer's node. Default is the id with the first letter capitalized
+    position: 0, // Horizontal position within a row. By default it uses the layer id and sorts in alphabetical order
+    startData() { return {
+        unlocked: true,
+		points: new Decimal(0),
+    }},
+    color: "Grey",
+    resetsNothing:"true",
+    branches: ["g", "p2","qf"],
+    requires: new Decimal("5000"), // Can be a function that takes requirement increases into account
+    resource: "Quantum Fluctuations", // Name of prestige currency
+    baseResource: "Creativity", // Name of resource prestige is based on
+    baseAmount() {return player.c2.points}, // Get the current amount of baseResource
+    type: "normal", // normal: cost to gain currency depends on amount gained. static: cost depends on how much you already have
+    exponent: 0.5, // Prestige currency exponent
+    gainMult() { // Calculate the multiplier for main currency from bonuses
+        mult = new Decimal(1)
+        if (hasUpgrade('qu', 11)) mult = mult.times("3")
+        if (hasUpgrade('qu', 12)) mult = mult.times("20")
+        if (hasUpgrade('qu', 13)) mult = mult.times("1500")
+        if (hasUpgrade('qu', 15)) mult = mult.times("1e6")
+        if (hasUpgrade('k', 12)) mult = mult.times("1e10")
+        if (hasUpgrade('g', 14)) mult = mult.times("5e5")
+        return mult
+    },
+    gainExp() { // Calculate the exponent on main currency from bonuses
+        return new Decimal(1)
+    },
+    row: 8, // Row the layer is in on the tree (0 is the first row)
+    hotkeys: [
+        {key: "none7", description: "None: Reset for Quantum Fluctations!", onPress(){
+            if (canReset(this.layer)) {
+                doReset(this.layer)
+            }
+        }},
+    ],
+    layerShown(){return true},
+    upgrades: {
+        11: {
+            title: "Cosmic Shift",
+            description: "There has been a shift in the cosmos. x3 QU.",
+            cost: new Decimal("1"),
+        },
+
+        12: {
+            title: "Quantum Physics",
+            description: "Ayyyyyyyyyy. Quantum physics exist now. x20 QU, x50 Ideas & x1e6 EE.",
+            cost: new Decimal("1"),
+        },
+
+        
+        13: {
+            title: "Time travel",
+            description: "Speeds up the process thus giving you x1000 QU.",
+            cost: new Decimal("1500"),
+        },
+
+        14: {
+            title: "Mega Mind",
+            description: "BIG BRAIN. x5000 Ideas.",
+            cost: new Decimal("1500"),
+        },
+
+        15: {
+            title: "Scientists that study quantum physics",
+            description: "Studying is broing lol. x1e6 QU.",
+            cost: new Decimal("1e12"),
+        },
+
+        15: {
+            title: "K N O W L E D G E",
+            description: "Unlock Knowledge (A sub of Creativity) to study more quantum physics to progress.",
+            cost: new Decimal("1e14"),
+        },
+    },
+})
+addLayer("v", {
+    name: "Value", // This is optional, only used in a few places, If absent it just uses the layer id.
+    symbol: "V", // This appears on the layer's node. Default is the id with the first letter capitalized
+    position: 0, // Horizontal position within a row. By default it uses the layer id and sorts in alphabetical order
+    startData() { return {
+        unlocked: true,
+		points: new Decimal(0),
+    }},
+    color: "Gold",
+    resetsNothing:"true",
+    branches: ["None"],
+    requires: new Decimal("1e6"), // Can be a function that takes requirement increases into account
+    resource: "Valueables", // Name of prestige currency
+    baseResource: "Creativity", // Name of resource prestige is based on
+    baseAmount() {return player.c2.points}, // Get the current amount of baseResource
+    type: "normal", // normal: cost to gain currency depends on amount gained. static: cost depends on how much you already have
+    exponent: 0.5, // Prestige currency exponent
+    gainMult() { // Calculate the multiplier for main currency from bonuses
+        mult = new Decimal(1)
+        if (hasUpgrade('v', 12)) mult = mult.times("3")
+        if (hasUpgrade('v', 13)) mult = mult.times("0.5")
+        if (hasUpgrade('g', 12)) mult = mult.times("50")
+        return mult
+    },
+    gainExp() { // Calculate the exponent on main currency from bonuses
+        return new Decimal(1)
+    },
+    row: 8, // Row the layer is in on the tree (0 is the first row)
+    hotkeys: [
+        {key: "none8", description: "None: Reset for Value!", onPress(){
+            if (canReset(this.layer)) {
+                doReset(this.layer)
+            }
+        }},
+    ],
+    layerShown(){return true},
+    upgrades: {
+        11: {
+            title: "Pure Gold",
+            description: "M O N E Y. x1e150000 Points",
+            cost: new Decimal("3"),
+        },
+
+        12: {
+            title: "Gold Bars",
+            description: "Gold but better. x1e6 Ideas + x3 Gold",
+            cost: new Decimal("100"),
+        },
+
+        13: {
+            title: "Heavier Gold",
+            description: "Gold is now heavier meaning less can be earned. Gravity x1000 & Valueables /2.",
+            cost: new Decimal("50000"),
+        },
+    },
+})
+addLayer("g", {
+    name: "Gravity", // This is optional, only used in a few places, If absent it just uses the layer id.
+    symbol: "G", // This appears on the layer's node. Default is the id with the first letter capitalized
+    position: 0, // Horizontal position within a row. By default it uses the layer id and sorts in alphabetical order
+    startData() { return {
+        unlocked: true,
+		points: new Decimal(0),
+    }},
+    color: "Red",
+    resetsNothing:"true",
+    branches: ["None"],
+    requires: new Decimal("1e30"), // Can be a function that takes requirement increases into account
+    resource: "Gravity", // Name of prestige currency
+    baseResource: "Quantum Fluctuations", // Name of resource prestige is based on
+    baseAmount() {return player.qu.points}, // Get the current amount of baseResource
+    type: "normal", // normal: cost to gain currency depends on amount gained. static: cost depends on how much you already have
+    exponent: 0.5, // Prestige currency exponent
+    gainMult() { // Calculate the multiplier for main currency from bonuses
+        mult = new Decimal(1)
+        if (hasUpgrade('g', 11)) mult = mult.times("2")
+        if (hasUpgrade('v', 13)) mult = mult.times("1000")
+        if (hasUpgrade('g', 12)) mult = mult.times("0.5")
+        if (hasUpgrade('g', 13)) mult = mult.times("1e6")
+        return mult
+    },
+    gainExp() { // Calculate the exponent on main currency from bonuses
+        return new Decimal(1)
+    },
+    row: 9, // Row the layer is in on the tree (0 is the first row)
+    hotkeys: [
+        {key: "none9", description: "None: Reset for Gravity!", onPress(){
+            if (canReset(this.layer)) {
+                doReset(this.layer)
+            }
+        }},
+    ],
+    layerShown(){return true},
+    upgrades: {
+        11: {
+            title: "Better Gravity",
+            description: "Now Bigger = Stronger Gravity! Now basically nothing goes in one direction. (x2 Gravity)",
+            cost: new Decimal("1"),
+        },
+
+        12: {
+            title: "Lighter Objects",
+            description: "Less gravity required so it gets halfed. But valueables x50. (Gravity /2 & Valueables x50)",
+            cost: new Decimal("1e5"),
+        },
+
+        13: {
+            title: "Denseity",
+            description: "More densely packed plantes and mroe gravity. x1e6 Gravity.",
+            cost: new Decimal("1.5e5"),
+        },
+
+        14: {
+            title: "Particles",
+            description: "OOOOOO First form of matter! (x5e5 QU & Unlocks Particles)",
+            cost: new Decimal("1e11"),
+        },
+    },
+})
+addLayer("k", {
+    name: "Knowledge", // This is optional, only used in a few places, If absent it just uses the layer id.
+    symbol: "K", // This appears on the layer's node. Default is the id with the first letter capitalized
+    position: 0, // Horizontal position within a row. By default it uses the layer id and sorts in alphabetical order
+    startData() { return {
+        unlocked: true,
+		points: new Decimal(0),
+    }},
+    color: "#30E080",
+    branches: ["None"],
+    requires: new Decimal("5e13"), // Can be a function that takes requirement increases into account
+    resource: "Knowledge", // Name of prestige currency
+    baseResource: "Ideas", // Name of resource prestige is based on
+    baseAmount() {return player.c2.points}, // Get the current amount of baseResource
+    type: "normal", // normal: cost to gain currency depends on amount gained. static: cost depends on how much you already have
+    exponent: 0.5, // Prestige currency exponent
+    gainMult() { // Calculate the multiplier for main currency from bonuses
+        mult = new Decimal(0)
+        if (hasUpgrade('qu', 15)) mult = mult.add("1")
+        return mult
+    },
+    gainExp() { // Calculate the exponent on main currency from bonuses
+        return new Decimal(1)
+    },
+    row: 8, // Row the layer is in on the tree (0 is the first row)
+    hotkeys: [
+        {key: "k", description: "k: Reset for Knowledge!", onPress(){
+            if (canReset(this.layer)) {
+                doReset(this.layer)
+            }
+        }},
+    ],
+    layerShown(){return true},
+    upgrades: {
+        11: {
+            title: "Point Research",
+            description: "Knowledge now gives you points. Scaling with a base of x1e50000.",
+            cost: new Decimal("1"),
+            effect() {
+                return player[this.layer].points.add(1).times("e50000")
+            },
+            effectDisplay() { return format(upgradeEffect(this.layer, this.id))+"x" },
+        },
+
+        12: {
+            title: "Study Quantum Physics",
+            description: "More smart on Quantum Physics. x5e10 QU.",
+            cost: new Decimal("1"),
+        },
+
+        13: {
+            title: "Study The Particles Theory/ Kinetic Theory Of Matter",
+            description: "'All matter consists of many, very small particles which are constantly moving or in a continual state of motion. The degree to which the particles move is determined by the amount of energy they have and their relationship to other particles.' x1e6 Particles.",
+            cost: new Decimal("2500"),
+        },
+    },
+})
+addLayer("p2", {
+    name: "Particles", // This is optional, only used in a few places, If absent it just uses the layer id.
+    symbol: "P", // This appears on the layer's node. Default is the id with the first letter capitalized
+    position: 0, // Horizontal position within a row. By default it uses the layer id and sorts in alphabetical order
+    startData() { return {
+        unlocked: true,
+		points: new Decimal(0),
+    }},
+    color: "#00faff",
+    resetsNothing:"true",
+    branches: ["None"],
+    requires: new Decimal("1e35"), // Can be a function that takes requirement increases into account
+    resource: "Particles", // Name of prestige currency
+    baseResource: "Quantum Fluctuations", // Name of resource prestige is based on
+    baseAmount() {return player.qu.points}, // Get the current amount of baseResource
+    type: "normal", // normal: cost to gain currency depends on amount gained. static: cost depends on how much you already have
+    exponent: 0.5, // Prestige currency exponent
+    gainMult() { // Calculate the multiplier for main currency from bonuses
+        mult = new Decimal(0)
+        if (hasUpgrade('g', 14)) mult = mult.add("1")
+        if (hasUpgrade('p2', 11)) mult = mult.times("10")
+        if (hasUpgrade('k', 13)) mult = mult.times("1e6")
+        if (hasUpgrade('p2', 13)) mult = mult.times("1e6")
+        if (hasUpgrade('p2', 14)) mult = mult.times("1e10")
+        if (hasUpgrade('sb', 14)) mult = mult.times("1e10")
+        if (hasUpgrade('p2', 21)) mult = mult.times("1e20")
+        if (hasUpgrade('p2', 22)) mult = mult.times("1e5")
+        return mult
+    },
+    gainExp() { // Calculate the exponent on main currency from bonuses
+        return new Decimal(1)
+    },
+    row: 9, // Row the layer is in on the tree (0 is the first row)
+    hotkeys: [
+        {key: "none10", description: "None: Reset for Particles!", onPress(){
+            if (canReset(this.layer)) {
+                doReset(this.layer)
+            }
+        }},
+    ],
+    layerShown(){return true},
+    upgrades: {
+        11: {
+            title: "Particle Accelerators",
+            description: "More Particles. x10 Particles.",
+            cost: new Decimal("1"),
+        },
+
+        12: {
+            title: "Quantum Foam",
+            description: "Unlocks Quantum Foam!",
+            cost: new Decimal("1.5e7"),
+        },
+
+        13: {
+            title: "More Particles",
+            description: "Read the title lol. x1e6 Particles",
+            cost: new Decimal("2.5e9"),
+        },
+
+        14: {
+            title: "More Particles II",
+            description: "Oh no not this again... x1e10 Particles",
+            cost: new Decimal("1e15"),
+        },
+
+        15: {
+            title: "Sussy Bakas+",
+            description: "Ok good it's not like CB. x1e6 SB.",
+            cost: new Decimal("1e25"),
+        },
+
+        21: {
+            title: "Mega Particle",
+            description: "Yes this one particle is 5e1e16 times better than other particle for no reason. x1e20",
+            cost: new Decimal("1.5e35"),
+        },
+
+        22: {
+            title: "Better Mega Particle",
+            description: "(I'm out of ideas ok?) Yes this one particle is 17e1e303 times better than other particle for no reason. x1e5",
+            cost: new Decimal("1.5e35"),
+        },
+    },
+})
+addLayer("qf", {
+    name: "QuantumFoam", // This is optional, only used in a few places, If absent it just uses the layer id.
+    symbol: "QF", // This appears on the layer's node. Default is the id with the first letter capitalized
+    position: 0, // Horizontal position within a row. By default it uses the layer id and sorts in alphabetical order
+    startData() { return {
+        unlocked: true,
+		points: new Decimal(0),
+    }},
+    color: "#ffe5f0",
+    resetsNothing:"true",
+    branches: ["None"],
+    requires: new Decimal("1e36"), // Can be a function that takes requirement increases into account
+    resource: "Quantum Foam", // Name of prestige currency
+    baseResource: "Quantum Fluctuations", // Name of resource prestige is based on
+    baseAmount() {return player.qu.points}, // Get the current amount of baseResource
+    type: "normal", // normal: cost to gain currency depends on amount gained. static: cost depends on how much you already have
+    exponent: 0.5, // Prestige currency exponent
+    gainMult() { // Calculate the multiplier for main currency from bonuses
+        mult = new Decimal(0)
+        if (hasUpgrade('p2', 12)) mult = mult.add("1")
+        return mult
+    },
+    gainExp() { // Calculate the exponent on main currency from bonuses
+        return new Decimal(1)
+    },
+    row: 8, // Row the layer is in on the tree (0 is the first row)
+    hotkeys: [
+        {key: "none11", description: "None: Reset for QF!", onPress(){
+            if (canReset(this.layer)) {
+                doReset(this.layer)
+            }
+        }},
+    ],
+    layerShown(){return true},
+    upgrades: {
+        11: {
+            title: "Particle Accelerators",
+            description: "More Particles. x10 Particles.",
+            cost: new Decimal("1"),
+        },
+
+        12: {
+            title: "Quantum Foam",
+            description: "Unlocks Quantum Foam!",
+            cost: new Decimal("1.5e7"),
+        },
+
+        13: {
+            title: "Denseity",
+            description: "More densely packed plantes and mroe gravity. x1e6 Gravity.",
+            cost: new Decimal("1.5e5"),
+        },
+    },
+})
+addLayer("sb", {
+    name: "SussyBakas", // This is optional, only used in a few places, If absent it just uses the layer id.
+    symbol: "SB", // This appears on the layer's node. Default is the id with the first letter capitalized
+    position: 0, // Horizontal position within a row. By default it uses the layer id and sorts in alphabetical order
+    startData() { return {
+        unlocked: true,
+		points: new Decimal(0),
+    }},
+    color: "#841109",
+    branches: ["None"],
+    requires: new Decimal("125"), // Can be a function that takes requirement increases into account
+    resource: "Sussy Bakas", // Name of prestige currency
+    baseResource: "Amogus Rebirth Points", // Name of resource prestige is based on
+    baseAmount() {return player.ar.points}, // Get the current amount of baseResource
+    type: "normal", // normal: cost to gain currency depends on amount gained. static: cost depends on how much you already have
+    exponent: 0.5, // Prestige currency exponent
+    gainMult() { // Calculate the multiplier for main currency from bonuses
+        mult = new Decimal(0)
+        if (hasUpgrade('p2', 12)) mult = mult.add("1")
+        if (hasUpgrade('sb', 11)) mult = mult.times("10")
+        if (hasUpgrade('sb', 12)) mult = mult.times("1e3")
+        if (hasUpgrade('p2', 15)) mult = mult.times("1e6")
+        return mult
+    },
+    gainExp() { // Calculate the exponent on main currency from bonuses
+        return new Decimal(1)
+    },
+    row: 2, // Row the layer is in on the tree (0 is the first row)
+    hotkeys: [
+        {key: "none12", description: "None: Reset for SB!", onPress(){
+            if (canReset(this.layer)) {
+                doReset(this.layer)
+            }
+        }},
+    ],
+    layerShown(){return true},
+    upgrades: {
+        11: {
+            title: "Sussy Baka Workers",
+            description: "They do work. x10 Sussy Bakas",
+            cost: new Decimal("1"),
+        },
+
+        12: {
+            title: "Sussy Basement",
+            description: "Where you keep your slav- Errrrr I mean sussy bakas. x1000 Sussy Bakas.",
+            cost: new Decimal("1e3"),
+        },
+
+        13: {
+            title: "Sussy Hell",
+            description: "Where your Sussy Bakas go after they unalive. x1e6 SB (Yup you need upgrades somewhere else.)",
+            cost: new Decimal("5e11"),
+        },
+
+        14: {
+            title: "Particle Boost",
+            description: "Particle boost SB. SB boost Particle. Fair Trade. x1e10 Particles",
+            cost: new Decimal("1e12"),
+        },
+    },
 })
